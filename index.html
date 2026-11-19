@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V皮座談｜電腦檢測</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/build/three.module.js",
+    "three/addons/": "./vendor/three/examples/jsm/",
+    "@pixiv/three-vrm": "./vendor/three-vrm/three-vrm.module.min.js",
+    "@mediapipe/tasks-vision": "./vendor/mediapipe/vision_bundle.mjs"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="stage" aria-label="測試舞台"></canvas>
+<video id="cam" playsinline muted></video>
+
+<main id="ui">
+  <!-- 1 開始 -->
+  <section class="card" id="s-intro">
+    <p class="eyebrow">V皮座談節目</p>
+    <h1>電腦檢測</h1>
+    <p>大約 1 分鐘。我們會請您開啟鏡頭與麥克風，然後自動測試這台電腦跑不跑得動節目畫面。</p>
+    <ul class="notes">
+      <li>請使用 <b>Chrome</b>，並接上電源。</li>
+      <li>測試期間請停留在這個分頁。</li>
+      <li>您的影像與聲音<b>不會上傳或錄下</b>，只會產生幾個數字。</li>
+    </ul>
+    <label class="field">您的姓名（方便我們對照結果）
+      <input id="name" type="text" autocomplete="name" placeholder="例如：王小明">
+    </label>
+    <p class="warn" id="intro-warn" hidden></p>
+    <button class="primary" id="btn-start">開始檢測</button>
+    <p class="fine" id="ver"></p>
+  </section>
+
+  <!-- 2 進行中 -->
+  <section class="card slim" id="s-run" hidden>
+    <h2 id="run-title">準備中…</h2>
+    <div class="bar"><div id="run-bar"></div></div>
+    <p class="fine" id="run-sub"></p>
+    <div class="mic"><span>麥克風</span><div class="bar thin"><div id="mic-bar"></div></div></div>
+  </section>
+
+  <!-- 3 結果 -->
+  <section class="card" id="s-result" hidden>
+    <p class="eyebrow">檢測結果（初步）</p>
+    <h1 id="tier-name"></h1>
+    <p id="tier-advice"></p>
+    <p class="warn" id="result-warn" hidden></p>
+    <textarea id="result-text" readonly rows="11"></textarea>
+    <div class="row">
+      <button class="primary" id="btn-copy">複製結果</button>
+      <button id="btn-try">試試看：讓角色跟著您動</button>
+    </div>
+    <p class="fine">請按「複製結果」，貼到會議聊天室或傳給小樽。</p>
+  </section>
+
+  <!-- 4 試玩 -->
+  <section class="dock" id="s-try" hidden>
+    <span>動動頭、眨眼、說話看看。</span>
+    <button id="btn-lip">嘴型：依臉部</button>
+    <button id="btn-back">回到結果</button>
+  </section>
+
+  <!-- 錯誤 -->
+  <section class="card" id="s-error" hidden>
+    <h2>檢測沒有完成</h2>
+    <p id="error-msg"></p>
+    <textarea id="error-text" readonly rows="6"></textarea>
+    <div class="row">
+      <button class="primary" id="btn-copy-err">複製這段訊息</button>
+      <button id="btn-reload">重新檢測</button>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>

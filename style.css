@@ -1,0 +1,132 @@
+:root {
+  --bg: #14121f;
+  --card: rgba(255, 255, 255, 0.96);
+  --ink: #1d1a2b;
+  --muted: #625d75;
+  --accent: #5b3df5;
+  --accent-ink: #ffffff;
+  --line: #dcd8ea;
+  --warn-bg: #fff4d6;
+  --warn-ink: #6b4a00;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  overflow: hidden;
+}
+#stage {
+  position: fixed; inset: 0;
+  width: 100vw; height: 100vh;
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(#2a2350, #14121f);
+}
+#cam {
+  position: fixed; right: 16px; top: 16px;
+  width: 200px; aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  transform: scaleX(-1);
+  background: #000;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 2;
+}
+#cam.on { opacity: 1; }
+#ui {
+  position: fixed; inset: 0;
+  display: grid; place-items: center;
+  padding: 20px;
+  pointer-events: none;
+  z-index: 3;
+}
+.card {
+  pointer-events: auto;
+  width: min(560px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  background: var(--card);
+  border-radius: 20px;
+  padding: 28px 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+.card.slim {
+  align-self: end;
+  width: min(520px, 100%);
+  padding: 18px 24px;
+  margin-bottom: 12px;
+}
+.dock {
+  pointer-events: auto;
+  align-self: end;
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  background: var(--card);
+  border-radius: 999px;
+  padding: 10px 14px 10px 22px;
+  margin-bottom: 12px;
+}
+[hidden] { display: none !important; }
+h1 { font-size: 34px; line-height: 1.25; margin: 0 0 10px; }
+h2 { font-size: 22px; margin: 0 0 10px; }
+p { margin: 0 0 14px; }
+.eyebrow { color: var(--accent); font-weight: 700; font-size: 14px; letter-spacing: 0.08em; margin-bottom: 4px; }
+.notes { margin: 0 0 18px; padding-left: 1.2em; color: var(--muted); }
+.notes li { margin-bottom: 4px; }
+.field { display: block; font-size: 15px; color: var(--muted); margin-bottom: 18px; }
+.field input {
+  display: block; width: 100%; margin-top: 6px;
+  font: inherit; color: var(--ink);
+  padding: 10px 12px;
+  border: 1.5px solid var(--line); border-radius: 10px;
+}
+.field input:focus { outline: 3px solid rgba(91, 61, 245, 0.3); border-color: var(--accent); }
+button {
+  font: inherit; font-weight: 600;
+  padding: 11px 18px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: #fff; color: var(--ink);
+  cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+button:focus-visible { outline: 3px solid rgba(91, 61, 245, 0.4); outline-offset: 2px; }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+button.primary:hover { filter: brightness(1.08); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.fine { font-size: 14px; color: var(--muted); margin: 8px 0 0; }
+.warn {
+  background: var(--warn-bg); color: var(--warn-ink);
+  border-radius: 10px; padding: 10px 14px; font-size: 15px;
+}
+.bar { height: 10px; background: #e7e3f3; border-radius: 999px; overflow: hidden; }
+.bar > div { height: 100%; width: 0%; background: var(--accent); border-radius: 999px; transition: width 0.25s linear; }
+.bar.thin { height: 6px; flex: 1; }
+.bar.thin > div { transition: width 0.06s linear; background: #1f9d68; }
+.mic { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); margin-top: 10px; }
+textarea {
+  width: 100%;
+  font: 13px/1.55 ui-monospace, "SF Mono", Consolas, monospace;
+  color: var(--ink);
+  background: #f5f3fb;
+  border: 1.5px solid var(--line); border-radius: 10px;
+  padding: 10px 12px; margin-bottom: 14px;
+  resize: vertical;
+}
+#tier-name[data-tier="S"] { color: #14804f; }
+#tier-name[data-tier="A"] { color: #2b63d9; }
+#tier-name[data-tier="B"] { color: #9a6700; }
+#tier-name[data-tier="C"] { color: #c0362c; }
+@media (max-width: 560px) {
+  .card { padding: 22px 20px; }
+  h1 { font-size: 28px; }
+  #cam { width: 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bar > div, #cam { transition: none; }
+}
